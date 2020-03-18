@@ -5,31 +5,47 @@ DB = Sequel.connect(connection_string)                                          
 #######################################################################################
 
 # Database schema - this should reflect your domain model
-DB.create_table! :events do
+
+# New domain model - adds users
+DB.create_table! :offers do
   primary_key :id
-  String :title
+  String :name
   String :description, text: true
   String :date
   String :location
 end
-DB.create_table! :rsvps do
+DB.create_table! :subscribers do
   primary_key :id
-  foreign_key :event_id
-  Boolean :going
+  foreign_key :offer_id
+  foreign_key :user_id
+  Boolean :interested
+  String :comments, text: true
+end
+DB.create_table! :users do
+  primary_key :id
   String :name
   String :email
-  String :comments, text: true
+  String: phone
+  String :city
+  String :password
 end
 
 # Insert initial (seed) data
-events_table = DB.from(:events)
+offers_table = DB.from(:offers)
 
-events_table.insert(title: "Bacon Burger Taco Fest", 
-                    description: "Here we go again bacon burger taco fans, another Bacon Burger Taco Fest is here!",
-                    date: "June 21",
-                    location: "Kellogg Global Hub")
+offers_table.insert(name: "Chicago Green Electricity", 
+                    description: "Full green renewable electricity guaranteed by our supplier to work towards a sustainable future",
+                    date: "April 20",
+                    location: "Chicago")
 
-events_table.insert(title: "Kaleapolooza", 
-                    description: "If you're into nutrition and vitamins and stuff, this is the event for you.",
-                    date: "July 4",
-                    location: "Nowhere")
+offers_table.insert(name: "San Francisco Wind/Solar Electricity", 
+                    description: "Use that SF wind & solar in your benefit!",
+                    date: "June 1",
+                    location: "San Francisco")
+
+offers_table.insert(name: "New York full renewable energy", 
+                    description: "Make those Wall Street profits while working towards a sustainable future",
+                    date: "June 19",
+                    location: "New York City")
+                    
+puts "Success!"

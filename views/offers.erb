@@ -1,0 +1,5 @@
+<h1>Energy Offers</h1>
+
+<% for offer in @offers %>
+    <p><a href="/offers/<%= offer[:id] %>"><%= offer[:name] %></a></p>
+<% end %>
