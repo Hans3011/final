@@ -3,3 +3,34 @@
 <% for offer in @offers %>
     <p><a href="/offers/<%= offer[:id] %>"><%= offer[:name] %></a></p>
 <% end %>
+
+    <hr>
+    <div>
+    <h1>Search your current location</h1>
+    </div>
+        <div class = "row">         
+            <div class = "col">
+                <form action="/maps">
+                    <input type = "text" name="q">
+                    <button type = "submit">Enter Location</submit>
+                </form>
+            </div>
+        </div>   
+    </div>
+
+<div class="container">
+    <hr>
+    <div>
+    <h1>Search the energy price in your State </h1>
+    Input has to be the two letter abbreviation of your state (eg. IL)
+    </div>
+        <div class = "row">         
+            <div class = "col">
+                <form action="/energy_prices">
+                    <input type = "text" name="p">
+                    <button type = "submit">Enter State</submit>
+                </form>
+            </div>
+        </div>   
+    </div>
+

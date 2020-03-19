@@ -4,7 +4,8 @@ require "sinatra/reloader" if development?                                      
 require "sequel"                                                                      #
 require "logger"                                                                      #
 require "twilio-ruby"                                                                 #
-require "bcrypt"                                                                      #
+require "bcrypt"  
+require "geocoder"                                                                    #
 connection_string = ENV['DATABASE_URL'] || "sqlite://#{Dir.pwd}/development.sqlite3"  #
 DB ||= Sequel.connect(connection_string)                                              #
 DB.loggers << Logger.new($stdout) unless DB.loggers.size > 0                          #
@@ -30,6 +31,27 @@ get "/" do
     pp @offers
 
     view "offers"
+end
+
+get "/maps" do
+
+    results = Geocoder.search(params["q"])
+    lat_long = results.first.coordinates
+
+    @lat = (lat_long[0])
+  @long = (lat_long[1])
+  @lat_long = "#{@lat},#{@long}"
+
+  view "map"
+
+end
+
+get "/energy_prices" do
+
+    @state = (params["p"])
+
+  view "energy_map"
+
 end
 
 # offer details (aka "show")
@@ -75,7 +97,7 @@ client = Twilio::REST::Client.new(account_sid, auth_token)
 client.messages.create(
   from: "+14803787433", 
   to: "+12242047092",
-  body: "Thanks for subscribing"
+  body: "Thanks for subscribing to Renewable Energy Offers"
 )
 
     redirect "/offers/#{@offer[:id]}"
