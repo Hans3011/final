@@ -18,6 +18,9 @@ offers_table = DB.from(:offers)
 subscribers_table = DB.from(:subscribers)
 users_table = DB.from(:users)
 
+account_sid = ENV["TWILIO_ACCOUNT_SID"]
+auth_token = ENV["TWILIO_AUTH_TOKEN"]
+
 before do
     @current_user = users_table.where(id: session["user_id"]).to_a[0]
 end
