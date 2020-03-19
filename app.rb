@@ -42,6 +42,8 @@ get "/maps" do
   @long = (lat_long[1])
   @lat_long = "#{@lat},#{@long}"
 
+  @google_api = ENV["GOOGLE_API"]
+
   view "map"
 
 end
