@@ -1,0 +1,26 @@
+<h2>
+    <i class="far fa-calendar-alt"></i>
+    <%= @offer[:date] %>
+</h2>
+<h1>Edit Subscription for <%= @offer[:name] %></h1>
+
+<form action="/subscribers/<%= @subscribe[:id] %>/update" method="post">
+  <div class="form-group">
+    <label>Do you want to subscribe?</label>
+    <select class="form-control" name="interested">
+      <% if @subscribe[:interested] %>
+        <option value="1" selected>Yes</option>
+        <option value="0">No</option>
+      <% else %>
+        <option value="1">Yes</option>
+        <option value="0" selected>No</option>
+      <% end %>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label>Comments</label>
+    <textarea class="form-control" rows="3" name="comments"><%= @subscribe[:comments] %></textarea>
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
