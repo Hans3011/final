@@ -20,6 +20,7 @@ users_table = DB.from(:users)
 
 account_sid = ENV["TWILIO_ACCOUNT_SID"]
 auth_token = ENV["TWILIO_AUTH_TOKEN"]
+client = Twilio::REST::Client.new(account_sid, auth_token)
 
 before do
     @current_user = users_table.where(id: session["user_id"]).to_a[0]
@@ -70,6 +71,13 @@ post "/offers/:id/subscribers/create" do
         comments: params["comments"],
         interested: params["interested"]
     )
+
+client.messages.create(
+  from: "+14803787433", 
+  to: "+12242047092",
+  body: "Thanks for subscribing"
+)
+
 
     redirect "/offers/#{@offer[:id]}"
 end
